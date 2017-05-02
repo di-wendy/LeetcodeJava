@@ -1,0 +1,32 @@
+//Bucket 92.55%
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        
+        //Store Frequency in Map, O(n)
+        Map<Integer, Integer> freqMap = new HashMap<Integer, Integer>(); //<value,freq>
+        for(int num:nums){
+            freqMap.put(num,freqMap.getOrDefault(num, 0)+1);
+        }
+        
+        //Dump numbers in List Array Bucket, O(n)
+        List<Integer>[] Bucket = new List[nums.length];
+        for(int value:freqMap.keySet()){
+            int freq = freqMap.get(value);
+            if(Bucket[freq-1] == null){
+                Bucket[freq-1] = new ArrayList<Integer>();
+            }
+            Bucket[freq-1].add(value);
+        }
+        
+        List<Integer> ans = new ArrayList<Integer>();
+        for(int i = nums.length - 1; ans.size()<k; i--){
+            if(Bucket[i] != null){
+                ans.addAll(Bucket[i]);
+            }
+        }
+        
+        return ans;
+        
+    }
+}
+
