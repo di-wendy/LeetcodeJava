@@ -30,3 +30,45 @@ public class Solution {
     }
 }
 
+//Priority Queue
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        
+        //HashMap to store <number,frequency>
+        HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
+
+        for(int n:nums){
+            if(hm.containsKey(n)){
+                hm.put(n,hm.get(n)+1);
+            }
+            else{
+                hm.put(n,1);
+            }
+        }
+
+        //Use Priority Queue to store Map.entry, arranged by frequency
+        PriorityQueue<Map.Entry<Integer,Integer>> pq =
+        new PriorityQueue<Map.Entry<Integer,Integer>>(new Comparator<Map.Entry<Integer,Integer>>()
+         {
+            @Override
+            public int compare(Map.Entry<Integer,Integer> element1,Map.Entry<Integer,Integer> element2) {
+                int ans = element2.getValue() - element1.getValue();
+                return ans;
+            }
+         });
+
+        //Put element into Queue
+        for(Map.Entry<Integer,Integer> element: hm.entrySet()){
+            pq.offer(element);
+        }
+
+        //Output the first k element in Priority queue
+        List<Integer> ans = new ArrayList<Integer>();
+        for(int i = 0; i < k; i++){
+            Map.Entry<Integer,Integer> element = pq.poll();
+            ans.add(element.getKey());
+        }
+        return ans;
+        
+    }
+}
