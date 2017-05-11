@@ -1,3 +1,42 @@
+//Bucket First Solution
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        
+        HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
+        for(int n:nums){
+            if(!hm.containsKey(n)){
+                hm.put(n,1);
+            }
+            else{
+                hm.put(n,hm.get(n)+1);
+            }
+        }
+        
+        //Dump numbers in List Array Bucket, O(n)
+        List<Integer>[] store = new List[nums.length + 1];
+        for(int value:hm.keySet()){
+            int freq = hm.get(value);
+            if(store[freq] == null){
+                store[freq] = new ArrayList<Integer>();
+            }
+            store[freq].add(value);
+        }
+        
+        //Build ans
+        List<Integer> ans = new ArrayList<Integer>();
+        for(int i = nums.length; i >=0; i --){
+            if(store[i] != null){
+                ans.addAll(store[i]);
+            }
+            if(ans.size() >= k){
+                break;
+            }
+        }
+        
+        return ans;
+    }
+}
+
 //Bucket 92.55%
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
