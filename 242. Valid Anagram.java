@@ -22,7 +22,7 @@ public class Solution {
     }
 }
 
-//54%
+//54% Bucket
 public class Solution {
     public boolean isAnagram(String s, String t) {
         
