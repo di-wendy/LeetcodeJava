@@ -57,3 +57,28 @@ public class Solution {
         
     }
 }
+
+//Easy to understand Solution
+public class Solution {
+    public int shortestDistance(String[] words, String word1, String word2) {
+        int ans = Integer.MAX_VALUE;
+        int p = -1; //POS for word1
+        int q = -1; //POS for word2
+        
+        for(int i = 0; i < words.length; i++){
+            if(words[i].equals(word1)){
+                p = i;
+            }
+            if(words[i].equals(word2)){
+                q = i;
+            }
+            if(p!=-1 && q!=-1){
+                ans = Math.min(ans,Math.abs(p-q));
+            }
+        }
+        
+        //Proof: word1 and word2 are both in the list. whenever update p/q, the existing q/p is the nearest one to the left.
+        
+        return ans;
+    }
+}
