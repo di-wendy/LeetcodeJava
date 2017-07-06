@@ -1,20 +1,20 @@
 public class Solution {
     public int climbStairs(int n) {
         
-        int a0 = 1;
-        int a1 = 2;
-        int ans = 0;
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+        if(n == 2) return 2;
         
-        if (n==0) return 0;
-        if (n==1) return 1;
-        if (n==2) return 2;
+        int[] store = new int[n];
+        store[0] = 1;
+        store[1] = 2;
         
-        for(int i=2; i<n; i++){
-            ans = (a0+a1);
-            a0 = a1;
-            a1 = ans;
+        for(int i = 2; i < n; i++){
+            store[i] = store[i - 1] + store[i - 2];
         }
         
-        return ans;
+        return store[n-1];
+        
     }
+}
 }
