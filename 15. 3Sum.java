@@ -45,25 +45,38 @@ public class Solution {
     }
 }
 
-//Without Duplicate 97.88%
+//Without Duplicate
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        if(nums.length < 3) return result;
+        
+        List<List<Integer>> ans = new LinkedList<>();
+        
         Arrays.sort(nums);
-        int i = 0;
-        while(i < nums.length - 2) {
+        
+        for(int i = 0; i < nums.length - 2; i++){
             if(nums[i] > 0) break;
-            int j = i + 1;
-            int k = nums.length - 1;
-            while(j < k) {
-                int sum = nums[i] + nums[j] + nums[k];
-                if(sum == 0) result.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                if(sum <= 0) while(nums[j] == nums[++j] && j < k);
-                if(sum >= 0) while(nums[k--] == nums[k] && j < k);
-            }
-            while(nums[i] == nums[++i] && i < nums.length - 2);
+            if(i == 0 || nums[i] != nums[i-1]){
+                int low = i + 1;
+                int high = nums.length - 1;
+                int target = -(nums[i]);
+                while(low < high){
+                    if(nums[low] + nums[high] == target){
+                        ans.add(Arrays.asList(nums[i],nums[low],nums[high]));
+                        while(low < high && nums[low] == nums[low + 1]) low++;
+                        while(low < high && nums[high - 1] == nums[high]) high--;
+                        low ++;
+                        high --;
+                    }
+                    else if(nums[low] + nums[high] < target){
+                        low++;
+                    }
+                    else{
+                        high--;
+                    }
+                }
+            }  
         }
-        return result;
+        
+        return ans;
     }
 }
