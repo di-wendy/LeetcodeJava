@@ -59,3 +59,36 @@
                     e.printStackTrace();
                 }
         }
+try {
+            SQLiteDatabase database = getActivity().openOrCreateDatabase("db", MODE_PRIVATE,null);
+
+            Cursor cursor = database.rawQuery("SELECT * FROM " + Course.TABLE, null);
+
+            int depIndex = cursor.getColumnIndex("dep");
+            int numIndex = cursor.getColumnIndex("num");
+            int nameIndex = cursor.getColumnIndex("name");
+            int diffIndex = cursor.getColumnIndex("difficulty");
+            int hourIndex = cursor.getColumnIndex("hours");
+
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String dep = cursor.getString(depIndex);
+                    String num = cursor.getString(numIndex);
+                    String name = cursor.getString(nameIndex);
+                    float diff = cursor.getFloat(diffIndex);
+                    float hours = cursor.getFloat(hourIndex);
+
+                    Course temp = new Course(dep,num,name,diff,hours);
+                    listDataAdapter.add(temp);
+
+                } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+            database.close();
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
