@@ -9,3 +9,53 @@
             c.close();
 
             Log.i("jfksjfdaskf",Boolean.toString(empty));
+
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("com.parse.starter", Context.MODE_PRIVATE);
+        if(!sharedPreferences.contains("First")){
+            sharedPreferences.edit().putBoolean("First",true).apply();
+        }
+
+        if(sharedPreferences.getBoolean("First",true)){
+            try {
+                    SQLiteDatabase db = this.openOrCreateDatabase("db", MODE_PRIVATE,null);
+
+                    db.execSQL("CREATE TABLE IF NOT EXISTS " + Course.TABLE +" ("
+                            + Course.KEY_DEP + " VARCHAR, "
+                            + Course.KEY_NUMBER + " VARCHAR PRIMARY KEY, "
+                            + Course.KEY_NAME + " VARCHAR, "
+                            + Course.KEY_DIFFICULTY + " REAL, "
+                            + Course.KEY_HOURS + " REAL)");
+
+
+                    //db.execSQL("DROP TABLE " + Course.TABLE);
+
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6035',2.4,8.5,'Intro to Information Security')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6210',4.1,15.2,'Advanced Operating Systems')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CSE','6220',4.6,19.5,'Intro to High-Performance Computing')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CSE','6242',2.8,12.5,'Data and Visual Analytics')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6250',2.5,5.7,'Computer Networks')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6262',2.5,8.8,'Network Security')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6290',3.9,12.6,'High Performance Computer Architecture')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6300',2.4,7.9,'Software Development Process')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6310',3.6,16.4,'Software Architecture and Design')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','6340',3.5,11.6,'Software Analysis and Test')");
+                    db.execSQL("INSERT INTO "+Course.TABLE+" (dep,num,difficulty,hours,name) VALUES ('CS','7641',4.3,19.7,'Machine Learning')");
+
+                    Cursor c = db.rawQuery("SELECT * FROM " + Course.TABLE, null);
+                    int nameIndex = c.getColumnIndex("name");
+
+                    c.moveToFirst();
+                    while(c != null){
+                        Log.i("name",c.getString(nameIndex));
+                        c.moveToNext();
+                    }
+
+                    c.close();
+                    db.close();
+
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+        }
