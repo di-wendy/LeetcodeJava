@@ -1,0 +1,11 @@
+            boolean empty = true;
+
+            Cursor c = db.rawQuery("SELECT COUNT(*) FROM " + Course.TABLE,null);
+
+            if (c != null && c.moveToFirst()) {
+                empty = (c.getInt (0) == 0);
+            }
+
+            c.close();
+
+            Log.i("jfksjfdaskf",Boolean.toString(empty));
