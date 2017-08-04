@@ -1,15 +1,14 @@
 public class Solution {
     public int rob(int[] nums) {
+        int pre = 0;
+        int val = 0;
         
-        int prev_yes = 0;
-        int prev_no = 0;
-        
-        for(int n: nums){
-            int temp = prev_no;
-            prev_no = Math.max(prev_no,prev_yes);
-            prev_yes = n + temp;
+        for(int n:nums){
+            int temp = val;
+            val = Math.max(val, pre + n);
+            pre = temp;
         }
         
-        return Math.max(prev_yes,prev_no);
+        return val;
     }
 }
