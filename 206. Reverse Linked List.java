@@ -12,21 +12,16 @@ public class Solution {
     public ListNode reverseList(ListNode head) {
         if(head ==null || head.next ==null) return head;
         
-        //Initilization
-        ListNode pointer = head.next; //3
-        ListNode record = head.next.next;//4
-        pointer.next = head;//3->1
-        head.next = null; //1->null
+       ListNode pre = null;
         
-        //Invariant
-        while(record !=null){
-            ListNode temp = pointer; //3
-            pointer = record; //4
-            record = record.next; //5
-            pointer.next = temp;//4->3,set link at the end
-        }
+       while(head != null){
+           ListNode temp = head.next;
+           head.next = pre;
+           pre = head;
+           head = temp;
+       }
         
-        return pointer;
+       return pre;
     }
 }
 
