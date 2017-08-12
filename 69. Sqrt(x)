@@ -1,17 +1,17 @@
 public class Solution {
     public int mySqrt(int x) {
         
-        if(x == 0) return 0;
-        
+        if(x == 0)  return 0;
+            
         int low = 1;
         int hi = x;
         
         while(low + 1 < hi){
             int medium = low + (hi - low)/2;
-            if(Math.pow(medium, 2) > x){
+            if(medium > x/medium){
                 hi = medium;
             }
-            else if(Math.pow(medium, 2) < x){
+            else if(medium < x/medium){
                 low = medium;
             }
             else{
