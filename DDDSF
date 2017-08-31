@@ -1,0 +1,63 @@
+/**
+ * Created by wangd on 8/26/2017.
+ */
+public class Product {
+
+    static int ans = 0;
+    static int MaxProduct(String nums, int k) {
+        int n = nums.length();
+        int[][] dp = new int[n][k + 1]; //n digits involved, k operators
+
+        for(int i = 0; i < n; ++i) {
+            dp[i][0]= Integer.valueOf(nums.substring(0, i + 1));
+        }
+
+        //j numbers
+        //i operators
+        for(int j = 1; j <= k; j++) {
+            for(int i = 1; i < n; i++) {
+                if(j >= i){
+                    dp[i][j] = 0; //not possible
+                    continue;
+                }
+                for(int m = 1; m <= i; m++) {
+                    dp[i][j] = Math.max(dp[i][j],Integer.valueOf(nums.substring(m, i + 1)) * dp[m-1][j-1]);
+                }
+            }
+        }
+        return dp[n-1][k];
+    }
+
+    static int MaxProduct2(String nums, int k){
+        if (nums.length() <= 1) return Integer.parseInt(nums);
+        int first = Integer.parseInt(nums.substring(0,1));
+        helper(nums, 2, 0, first, 1, k);
+        return ans;
+    }
+
+    static void helper(String nums, int pos, int mul, int num, int res, int k){
+        if (mul >= k || pos > nums.length()){
+            if (pos < (nums.length()) && mul == k){
+                res *= Integer.parseInt(nums.substring(pos,nums.length()));
+            }
+            //System.out.println(res);
+            ans = Math.max(ans,res);
+            return;
+        }
+
+        for (int i = pos; i < nums.length(); i++) {
+            mul += 1;
+            res *= num;
+            helper(nums, i + 1, mul, Integer.parseInt(nums.substring(i, i + 1)), res, k);
+            mul -= 1;
+            res /= num;
+            num = num * 10 + Integer.parseInt(nums.substring(i, i + 1));
+        }
+    }
+
+    public static void main(String[] args){
+        String input = "21322";
+        System.out.println(MaxProduct2(input,2));
+        System.out.println(MaxProduct(input,2));
+    }
+}
