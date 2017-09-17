@@ -46,3 +46,18 @@ public class Solution {
         return profit;
     }
 }
+
+//Short Code
+class Solution {
+    public int maxProfit(int[] prices) {
+        //Kadane's Algorithm
+        int temp = 0, overall = 0;
+        int res = 0;
+        for (int i = 1; i < prices.length; i++){
+            temp = prices[i] - prices[i - 1];
+            overall = Math.max(0, overall + temp);
+            res = Math.max(res, overall);
+        }
+        return res;
+    }
+}
