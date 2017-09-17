@@ -1,32 +1,29 @@
-//Time Limit Exceed
-public class Solution {
+class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        
-        int len = p.length();
-        List<Integer> ans = new ArrayList<Integer> ();
-        
-        for(int i = 0; i < s.length() - len + 1; i++){
-            if(isAnagram(s.substring(i,i+len),p)){
-                ans.add(i);
+        int[] dic1 = new int[26]; //Store the occurance of each letter
+        int[] dic2 = new int[26];
+        List<Integer> res = new ArrayList<>();
+        for (char c : p.toCharArray()){
+            dic2[c - 'a'] ++;
+        }
+        for (int i = 0; i < s.length(); i++){
+            dic1[s.charAt(i) - 'a']++;
+            if (i >= p.length()){
+                dic1[s.charAt(i - p.length()) - 'a']--;
+            }
+            if (i >= p.length() - 1){
+                for (int j = 0; j < 26; j++){
+                    if (dic1[j] != dic2[j]){
+                        break;
+                    }
+                    if (j == 25){
+                        res.add(i - p.length() + 1);
+                    }
+                }
             }
         }
-        return ans;
-        
-    }
-    
-    public boolean isAnagram(String s, String t) {
-        
-        int[] store = new int[26];
-        
-        for(int i=0; i<s.length(); i++){store[s.charAt(i)-'a'] ++;}
-        for(int i=0; i<t.length(); i++){store[t.charAt(i)-'a'] --;}
-        
-        for(int i=0; i<26; i++){
-            if(store[i] !=0){
-                return false;
-            }
-        }
-        return true;
+        return res;
     }
 }
 
+//O(24n)
