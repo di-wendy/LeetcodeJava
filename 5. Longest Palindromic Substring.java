@@ -1,25 +1,17 @@
-public class Solution {
+class Solution {
     public String longestPalindrome(String s) {
-        if(s==null || s.length()<2) return s;
-        int n = s.length();
-        boolean[][] store = new boolean[n][n];
-        int max = 0;
-        String ans = "";
-        
-        for(int i=n-1; i>=0; i--){
-            for(int j=i; j<n; j++){
-                if(s.charAt(i)==s.charAt(j) && (j-i<2||store[i+1][j-1]))
-                    store[i][j]=true;
-                else store[i][j]=false;
-                
-                if(store[i][j] && (j-i+1)>=max){
-                    ans = s.substring(i,j+1);
-                    max = (j-i+1);
+        String res = "";
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int i = 0; i < s.length(); i++){
+            for (int j = i; j < s.length(); j++){
+                if (s.charAt(i) == s.charAt(j) && (j - i <= 2 || dp[i+1][j-1])){
+                    dp[i][j] = true;
+                }
+                if (dp[i][j] && (res == null || j - i + 1 > res.length())){
+                    res = s.substring(i, j + 1);
                 }
             }
         }
-        
-        return ans;
-        
+        return res;
     }
 }
