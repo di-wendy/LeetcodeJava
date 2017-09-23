@@ -15,3 +15,23 @@ class Solution {
         return money[amount];
     }
 }
+//Coin Change
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        
+        for (int i = 1; i <= amount; i++){
+            int num = Integer.MAX_VALUE;
+            for (int j = 0; j < coins.length; j++){
+                if (i - coins[j] >= 0){
+                    if (dp[i - coins[j]] != -1){
+                        num = Math.min(dp[i - coins[j]] + 1, num);
+                    }
+                }
+                dp[i] = (num == Integer.MAX_VALUE)?-1:num;
+            }
+        }
+        
+        return dp[amount];
+    }
+}
