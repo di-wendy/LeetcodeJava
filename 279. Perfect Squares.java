@@ -21,3 +21,20 @@ class Solution {
         return square[n];
     }
 }
+
+//Short
+class Solution {
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1]; //dp[i] means ans for i
+        
+        //Update
+        for (int i = 1; i <= n; i++){
+            int temp = dp[i - 1];
+            for (int j = (int)Math.sqrt(i); j > 0; j --){
+                temp = Math.min(temp, dp[i - j*j]);
+            }
+            dp[i] = temp + 1;
+        }
+        return dp[n];
+    }
+}
