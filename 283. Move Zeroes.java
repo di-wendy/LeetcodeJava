@@ -1,23 +1,16 @@
-public class Solution {
+class Solution {
     public void moveZeroes(int[] nums) {
-        //Two Pointer
         
-        int i = 0;
-        int j = 0;
-        
-        while(j < nums.length){
-            if(nums[j] != 0){
-                nums[i] = nums[j];
-                i++;
+        int cur = 0;
+        for (int i = 0; i < nums.length; i++){
+            if (nums[i] != 0){
+                nums[cur] = nums[i];
+                cur ++;
             }
-            j++;
         }
-        
-        while(i < nums.length){
+        for (int i = cur; i < nums.length; i++){
             nums[i] = 0;
-            i++;
         }
         
-        return;
     }
 }
