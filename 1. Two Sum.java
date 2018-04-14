@@ -1,24 +1,16 @@
-//Hashmap 8ms
-
-public class Solution {
+class Solution {
     public int[] twoSum(int[] nums, int target) {
         
-        HashMap <Integer,Integer> hm = new HashMap <Integer,Integer>();
-        int[] ans = new int[2];
-        int index = 0;
-        
-        for(int i: nums){
-            int t = target - i;
-            if (!hm.containsKey(t)) hm.put(i,index);
-            else {
-                ans[0] = hm.get(t);
-                ans[1] = index;
-                return ans;
+        Map<Integer, Integer> hm = new HashMap();
+        for (int i = 0; i < nums.length; i++){
+            if (hm.containsKey(target - nums[i])){
+                return new int[]{hm.get(target - nums[i]), i};
             }
-            index ++;
+            else{
+                hm.put(nums[i], i);
+            }
         }
-        return ans;
+        
+        return new int[]{-1, -1};
     }
 }
-
-//
