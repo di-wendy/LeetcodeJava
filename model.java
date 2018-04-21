@@ -1,9 +1,5 @@
-class Solution {
-        public String minWindow(String s, String t) {
-        if(t.length() > s.length() || s.length() == 0 || t.length() == 0){
-            return "";
-        }
-            
+class model{
+    public static String minWindow(String s, String t) {
         int[] sNum = new int[256];
         int[] tNum = new int[256];
         
@@ -12,8 +8,7 @@ class Solution {
             tNum[c] += 1;
         }
         
-        String ans = "";
-        int minlen = s.length();
+        String ans = s;
         
         //To find the minimum window
         int i = 0;
@@ -23,9 +18,8 @@ class Solution {
                 sNum[s.charAt(j)] ++;
                 j++;
             }
-            if (j - i <= minlen && isCovered(sNum, tNum)){
+            if (j - i <= ans.length() && isCovered(sNum, tNum)){
                 ans = s.substring(i, j);
-                minlen = j - i;
             }
             sNum[s.charAt(i)] --;
         }
@@ -33,12 +27,19 @@ class Solution {
     }
 
     //Test
-    public boolean isCovered(int[] sNum, int[] tNum){
+    public static boolean isCovered(int[] sNum, int[] tNum){
         for (int i = 0; i < tNum.length; i++){
             if (tNum[i] > sNum[i]){
                 return false;
             }
         }
         return true;
+    }
+    public static void main(String[] args){
+        String s = "ADOBECODEBANC";
+        String t = "ABC";
+        String s2 = "A";
+        String t2 = "";
+        System.out.println(minWindow(s2, t2));
     }
 }
