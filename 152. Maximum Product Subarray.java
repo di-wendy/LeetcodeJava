@@ -56,3 +56,31 @@ class Solution {
         return ans;
     }
 }
+
+//New Version
+class Solution {
+    public int maxProduct(int[] nums) {
+        if (nums.length == 0){
+            return 0;
+        }
+
+        int[] pos = new int[nums.length];
+        int[] neg = new int[nums.length];
+        
+        pos[0] = nums[0];
+        neg[0] = nums[0];
+        
+        //Record the maximum product subarray end at position i
+        for (int i = 1; i < nums.length; i++){
+            pos[i] = Math.max(pos[i - 1] * nums[i], Math.max(nums[i], neg[i - 1] * nums[i]));
+            neg[i] = Math.min(pos[i - 1] * nums[i], Math.min(nums[i], neg[i - 1] * nums[i]));
+        }
+        int res = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++){
+            res = Math.max(res, pos[i]);
+            res = Math.max(res, neg[i]);
+        }
+        
+        return res;
+    }
+}
