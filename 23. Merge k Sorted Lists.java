@@ -6,40 +6,36 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+
+class compareNode implements Comparator<ListNode>{
+    public int compare(ListNode A, ListNode B){
+        return A.val - B.val;
+    }
+}
+
 public class Solution {
-    private Comparator<ListNode> ListNodeComparator = new Comparator<ListNode> (){
-        public int compare(ListNode a, ListNode b){
-            if(a == null) return 1; //true
-            if(b == null) return -1;
-            return a.val - b.val;
-        }
-    };
-    
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists == null || lists.length == 0){
-            return null;
-        }
-        
-        Queue<ListNode> heap = new PriorityQueue<ListNode>(lists.length, ListNodeComparator);
-        
-        for(int i = 0; i < lists.length; i++){
-            if(lists[i] != null){
-                heap.add(lists[i]); //avoid add null
-            }
-        }
-        
         ListNode dummy = new ListNode(0);
-        ListNode tail = dummy;
-        
-        while(!heap.isEmpty()){
-            ListNode head = heap.poll(); //Take out the min value
-            tail.next = head;
-            tail = head;
-            if(head.next != null){
-                heap.add(head.next);
+
+        ListNode p = dummy;
+        Queue<ListNode> q = new PriorityQueue<ListNode>(new compareNode());
+
+        for (int i = 0; i < lists.length; i++){
+            if(lists[i] != null){
+                q.offer(lists[i]);
             }
         }
-        
+
+        //Complexity is O(nlongn), Space is O(n)
+        while(q.size() > 0){
+            ListNode cur = q.poll();
+            p.next = new ListNode(cur.val);
+            p = p.next;
+            if (cur.next != null){
+                q.offer(cur.next);
+            }
+        }
+
         return dummy.next;
     }
-}\
+}

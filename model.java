@@ -1,45 +1,46 @@
-class model{
-    public static String minWindow(String s, String t) {
-        int[] sNum = new int[256];
-        int[] tNum = new int[256];
-        
-        //init tNum
-        for (char c : t.toCharArray()){
-            tNum[c] += 1;
-        }
-        
-        String ans = s;
-        
-        //To find the minimum window
-        int i = 0;
-        int j = 0;
-        for (i = 0; i < s.length(); i++){
-            while(j < s.length() && !isCovered(sNum, tNum)){
-                sNum[s.charAt(j)] ++;
-                j++;
-            }
-            if (j - i <= ans.length() && isCovered(sNum, tNum)){
-                ans = s.substring(i, j);
-            }
-            sNum[s.charAt(i)] --;
-        }
-        return ans;
-    }
+import java.util.*;
 
-    //Test
-    public static boolean isCovered(int[] sNum, int[] tNum){
-        for (int i = 0; i < tNum.length; i++){
-            if (tNum[i] > sNum[i]){
-                return false;
+class model{
+
+        public int woodCut(int[] L, int k) {
+
+            int l = 1;
+            int r = 0;
+
+            //Find the maximum
+            for (int item : L) {
+                r = Math.max(r, item);
             }
+
+            while (l + 1 < r) {
+                int mid = l + (r - l) / 2;
+                if (count(L, mid) >= k) {
+                    l = mid;
+                } else {
+                    r = mid;
+                }
+            }
+
+            if (count(L, r) >= k) {
+                return r;
+            }
+
+            if (count(L, l) >= k) {
+                return l;
+            }
+            return 0;
         }
-        return true;
-    }
+
+        private int count(int[] L, int len) {
+            int sum = 0;
+            for (int item : L) {
+                sum += item / len;
+            }
+            return sum;
+        }
+
     public static void main(String[] args){
-        String s = "ADOBECODEBANC";
-        String t = "ABC";
-        String s2 = "A";
-        String t2 = "";
-        System.out.println(minWindow(s2, t2));
+
+
     }
 }
