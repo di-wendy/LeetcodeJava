@@ -1,26 +1,28 @@
-//Flip, the loop length is .length/2 instead of .length
-
-public class Solution {
+class Solution {
     public void rotate(int[][] matrix) {
-        
-        //i row number, j column number
-        
-        for(int i = 0; i < matrix.length - 1; i++){
-            for(int j = i + 1; j < matrix.length; j++){
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = temp;
+        if (matrix == null || matrix.length == 0){
+            return;
+        }
+        int m = matrix.length;
+        //Transpose and flip
+        for (int i = 0; i < m; i++){
+            for (int j = i; j < m; j++){
+                swap(matrix, i, j, j, i);
             }
         }
         
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix.length/2; j++){
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[i][matrix.length - 1 - j];
-                matrix[i][matrix.length - 1 - j] = temp;
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < m / 2; j++){
+                swap(matrix, i, j, i, m - j - 1);
             }
         }
         
         return;
+    }
+    
+    public void swap(int[][] matrix, int i, int j, int k, int h){
+        int temp = matrix[i][j];
+        matrix[i][j] = matrix[k][h];
+        matrix[k][h] = temp;
     }
 }
