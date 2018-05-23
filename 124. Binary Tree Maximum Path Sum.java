@@ -63,3 +63,26 @@ public class Solution {
         
     }
 }
+
+//
+class Solution {
+    int ans = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        getMaxCur(root);
+        return ans;
+    }
+    
+    public int getMaxCur(TreeNode root){
+        if (root == null){
+            return 0;
+        }
+        int left = getMaxCur(root.left);
+        int right = getMaxCur(root.right);
+        int op1 = left + right + root.val;
+        int op2 = left + root.val;
+        int op3 = right + root.val;
+        int op4 = root.val;
+        ans = Math.max(Math.max(op1, op2),Math.max(op3, Math.max(ans,op4)));
+        return Math.max(Math.max(op2,op3),op4);
+    }
+}
