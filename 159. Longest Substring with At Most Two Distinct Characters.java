@@ -1,35 +1,33 @@
-public class Solution {
+class Solution {
     public int lengthOfLongestSubstringTwoDistinct(String s) {
+        Map<Character, Integer> hm = new HashMap<>();
+        //Char and its number of occurrence
         
-        int[] element = new int[256];
-        
-        int i = 0;
-        int j = 0;
-        
-        String res = "";
-        
-        while(i < s.length()){
-            while(j < s.length() && isDistinct(element,2)){
-                element[s.charAt(j)] ++;
-                j ++;
-            }
-            int end = (j == s.length() && isDistinct(element,2))?s.length():j - 1;
-            if(end - i > res.length()){
-                res = s.substring(i, end);
-            }
-            if(j == s.length()) break;
-            element[s.charAt(i)]--;
-            i++;
-        }
-        return res.length();
-    }
-    
-    public boolean isDistinct(int[] element, int max){
+        int start = 0;
         int ans = 0;
-        for(int n:element){
-            if(n > 0)
-                ans++;
+        
+        for (int i = 0; i < s.length(); i++){
+            char cur = s.charAt(i);
+            
+            if (!hm.containsKey(cur)){
+                hm.put(cur, 1);
+            } else {
+                hm.put(cur, hm.get(cur) + 1);
+            }
+            
+            while (hm.size() > 2){
+                char c = s.charAt(start);
+                if (hm.get(c) > 1){  //Key
+                    hm.put(c, hm.get(c) - 1);
+                } else {
+                    hm.remove(c);
+                }
+                start++;
+            }
+
+            ans = Math.max(ans, i - start + 1);
         }
-        return (ans <= max);
+        
+        return ans;
     }
 }
