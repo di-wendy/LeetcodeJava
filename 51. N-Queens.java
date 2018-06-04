@@ -52,3 +52,50 @@ public class Solution {
         return ans;
     }
 }
+
+//Shorter Method
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        int[] res = new int[n];
+        search(n, res, 0, ans);
+        return ans;
+    }
+    
+    public void search(int n, int[] res, int row, List<List<String>> ans){
+        if (n == row){
+            ans.add(convert(res));
+            return;
+        }
+        
+        for (int i = 0; i < n; i ++){
+            res[row] = i; //Will be overwrite, no need to reset
+            if (check(res, row)){
+                search(n, res, row + 1, ans);
+            }
+        }
+    }
+    
+    public boolean check(int[] res, int row){
+        for (int i = 0; i < row; i++){
+            if (res[row] == res[i] ||
+               Math.abs(res[row] - res[i]) == row - i){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public List<String> convert(int[] res){
+        List<String> ans = new ArrayList<>();
+        for (int i = 0; i < res.length; i++){
+            StringBuilder cur = new StringBuilder();
+            for (int j = 0; j < res.length; j++){
+                if (j == res[i]) cur.append('Q');
+                else cur.append('.');
+            }
+            ans.add(cur.toString());
+        }
+        return ans;
+    }
+}
