@@ -25,3 +25,19 @@ public class Solution {
         return ans;
     }
 }
+
+//Recursion
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        search(ans, root);
+        return ans;
+    }
+    
+    public void search(List<Integer> ans, TreeNode cur){
+        if (cur == null) return;
+        ans.add(cur.val);
+        search(ans, cur.left);
+        search(ans, cur.right);
+    }
+}
