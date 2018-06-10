@@ -1,21 +1,17 @@
 class Solution {
-    public int strStr(String source, String target) {
-        if (source == null || target == null) {
-                    return -1;
-                }
+    public int strStr(String haystack, String needle) {
+        if (haystack.length() == 0) return (needle.length() == 0) ? 0 : -1;
+        if (needle.length() == 0) return 0;
 
-        for (int i = 0; i < source.length() - target.length() + 1; i++) {
-            int j = 0;
-            for (j = 0; j < target.length(); j++) {
-                if (source.charAt(i + j) != target.charAt(j)) {
-                    break;
-                }
-            }
-            // finished loop, target found
-            if (j == target.length()) {
-                return i;
+        for (int s = 0; s < haystack.length(); s++){
+            int p1 = s;
+            int p2 = 0;
+            while (p1 < haystack.length() && p2 < needle.length() && haystack.charAt(p1) == needle.charAt(p2)){
+                p1++;
+                p2++;
+                if (p2 == needle.length()) return p1 - p2;
             }
         }
-            return -1;
+        return -1;
     }
 }
