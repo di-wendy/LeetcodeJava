@@ -1,28 +1,18 @@
-public class Solution {
+class Solution {
     public int majorityElement(int[] nums) {
-        
-        if(nums.length == 0){
-            return 0;
-        }
-        
-        int candidate = nums[0];
-        int count = 1;
-        
-        for(int i = 1; i < nums.length; i++){
-            if(count == 0){
-                candidate  = nums[i];
-                count = 1;
-            }
-            else{
-                if(candidate == nums[i]){
-                    count ++;
-                }
-                else{
-                    count --;
-                }
+        //Boyer Moore Algorithm
+        //Another method is Sorting and take n/2
+        int count = 0;
+        int ans = nums[0];
+        for (int n : nums){
+            if (count == 0) {
+                ans = n;
+                count += 1;
+            } else {
+                if (n == ans) count++;
+                else count--;
             }
         }
-        
-        return candidate;
+        return ans;
     }
 }
