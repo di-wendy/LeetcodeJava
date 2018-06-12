@@ -26,4 +26,30 @@ class Solution {
     }
 }
 
-//O(24n)
+//Counter
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        Map<Character, Integer> mp = new HashMap<>();
+        List<Integer> ans = new ArrayList<>();
+        for (char c : p.toCharArray()){
+            mp.put(c, mp.getOrDefault(c, 0) + 1);
+        }
+        int size = mp.size();
+        for (int i = 0, j = 0; i< s.length(); i++){
+            if (mp.containsKey(s.charAt(i))){
+                mp.put(s.charAt(i), mp.get(s.charAt(i)) - 1);
+                if (mp.get(s.charAt(i)) == 0) size--;
+            }
+            while (size == 0){
+                if (i - j + 1 == p.length()) ans.add(j); //Key
+                if (mp.containsKey(s.charAt(j))){
+                    mp.put(s.charAt(j), mp.get(s.charAt(j)) + 1);
+                    if (mp.get(s.charAt(j)) > 0) size++;
+                }
+                j++;
+            }
+            
+        }
+        return ans;
+    }
+}
