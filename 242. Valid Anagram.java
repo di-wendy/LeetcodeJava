@@ -1,28 +1,3 @@
-//27%
-public class Solution {
-    public boolean isAnagram(String s, String t) {
-        
-        if(s.length()!=t.length()) {
-            return false;
-        }
-        
-        char[] s_letters = s.toCharArray();
-        char[] t_letters = t.toCharArray();
-        
-        Arrays.sort(s_letters);
-        Arrays.sort(t_letters);
-
-        for(int i = 0; i < s.length(); i++) {
-            if(s_letters[i] != t_letters[i]){
-                return false;
-            }
-        }
-        
-        return true;
-    }
-}
-
-//54% Bucket
 public class Solution {
     public boolean isAnagram(String s, String t) {
         
@@ -39,6 +14,23 @@ public class Solution {
             if(store[i] !=0){
                 return false;
             }
+        }
+        return true;
+    }
+}
+
+//Hash 2
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        int[] count = new int[26];
+        if (s.length() != t.length()) return false;
+        for (char c : s.toCharArray()){
+            count[c - 'a']++;
+        }
+        
+        for (char c : t.toCharArray()){
+            count[c - 'a']--;
+            if (count[c - 'a'] < 0) return false;
         }
         return true;
     }
