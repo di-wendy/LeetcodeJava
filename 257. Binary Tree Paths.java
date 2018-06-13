@@ -7,26 +7,22 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
-        
-        List<String> st = new ArrayList<>();
-        if(root == null) return st;
-        if(root.left == null && root.right == null){
-            st.add(""+root.val);
-        }
-        if(root.left != null) dfs(root.left,"" + root.val, st);
-        if(root.right != null) dfs(root.right,"" + root.val, st);
-        
-        return st;
+        List<String> ans = new ArrayList<>();
+        if (root == null) return ans;
+        helper(root, "", ans);
+        return ans;
     }
     
-    public void dfs(TreeNode root, String s, List<String> set){
-        if(root.left == null && root.right == null) {
-            set.add(s + "->" + root.val);
-            return;}
-        
-        if(root.left != null) dfs(root.left, s+"->" + root.val, set);
-        if(root.right != null) dfs(root.right, s+"->" + root.val, set);
+    public void helper(TreeNode root, String temp, List<String> ans){
+        if (root.left == null && root.right == null){
+            temp += String.valueOf(root.val);
+            ans.add(temp);
+            return;
+        }
+        temp += (String.valueOf(root.val) + "->");
+        if (root.left != null) helper(root.left, temp, ans);
+        if (root.right != null) helper(root.right, temp, ans);
     }
 }
