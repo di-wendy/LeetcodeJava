@@ -1,14 +1,9 @@
-public class Solution {
+class Solution {
     public int titleToNumber(String s) {
-        
-        int ans = 0;
-        char[] letters = s.toCharArray();
-        
-        for(char a:letters){
-            ans *= 26;
-            ans += (a-'A'+1);
+        int total = 0;
+        for (char c : s.toCharArray()){
+            total = total * 26 + (c - 'A' + 1);
         }
-        
-        return ans;
+        return total;
     }
 }
