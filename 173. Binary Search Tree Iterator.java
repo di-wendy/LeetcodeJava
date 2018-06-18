@@ -37,3 +37,34 @@ public class BSTIterator {
         return node.val;
     }
 }
+
+//Upate
+public class BSTIterator {
+
+    private Queue<Integer> numbers;
+    
+    public BSTIterator(TreeNode root) {
+        numbers = new LinkedList<>();
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !st.isEmpty()){
+            while (cur != null){
+                st.push(cur);
+                cur = cur.left;
+            }
+            cur = st.pop();
+            numbers.offer(cur.val);
+            cur = cur.right;
+        }
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !numbers.isEmpty();
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        return numbers.poll();
+    }
+}
