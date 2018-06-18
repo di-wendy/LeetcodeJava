@@ -1,84 +1,19 @@
-
-//Di's Solution Theta(n) beat 23%
-public class Solution {
+class Solution {
     public int shortestDistance(String[] words, String word1, String word2) {
-        
-        HashSet <String> hs = new HashSet <String>();
-        int left = 0;
-        int right = 0;
-        int ans = Integer.MAX_VALUE;
-        
-        for(int i=0; i<words.length; i++){
-            
-            if (words[i].equals(word1) || words[i].equals(word2)){
-                
-                if (hs.size()== 0) left = i;
-                if (hs.size() !=0 && !hs.contains(words[i])) right = i;
-                if (hs.size() !=0 && hs.contains(words[i])) left = i;
-                hs.add(words[i]);
-                
+        Map<String, Integer> map = new HashMap<>();
+        int dis = words.length;
+        for (int i = 0; i < words.length; i++){
+            if (words[i].equals(word1)){
+                map.put(word1, i);
+                if (!map.containsKey(word2)) continue;
+                else dis = Math.min(dis, i - map.get(word2));
             }
-            if (hs.size()==2){
-                ans = Math.min(ans,Math.abs(left-right));
-                if (words[i].equals(word1)) hs.remove(word2);
-                else hs.remove(word1);
-                left = i;
+            if (words[i].equals(word2)){
+                map.put(word2, i);
+                if (!map.containsKey(word1)) continue;
+                else dis = Math.min(dis, i - map.get(word1));
             }
         }
-        
-        return ans;
-    }
-}
-
-//Two list beat 23%
-public class Solution {
-    public int shortestDistance(String[] words, String word1, String word2) {
-        
-        List <Integer> wlist1 = new ArrayList<Integer> ();
-        List <Integer> wlist2 = new ArrayList<Integer> ();
-        
-        int ans = words.length;
-        
-        for(int i=0; i<words.length; i++){
-            if(words[i].equals(word1)) wlist1.add(i);
-            if(words[i].equals(word2)) wlist2.add(i);
-        }
-        
-        int p = 0;
-        int q = 0;
-        while(p<wlist1.size() && q<wlist2.size()){
-            ans = Math.min(ans,Math.abs(wlist1.get(p)-wlist2.get(q)));
-            
-            if (wlist1.get(p)<wlist2.get(q)) p++;
-            else q++;
-        }
-        
-        return ans;
-        
-    }
-}
-
-//Easy to understand Solution
-public class Solution {
-    public int shortestDistance(String[] words, String word1, String word2) {
-        int ans = Integer.MAX_VALUE;
-        int p = -1; //POS for word1
-        int q = -1; //POS for word2
-        
-        for(int i = 0; i < words.length; i++){
-            if(words[i].equals(word1)){
-                p = i;
-            }
-            if(words[i].equals(word2)){
-                q = i;
-            }
-            if(p!=-1 && q!=-1){
-                ans = Math.min(ans,Math.abs(p-q));
-            }
-        }
-        
-        //Proof: word1 and word2 are both in the list. whenever update p/q, the existing q/p is the nearest one to the left.
-        
-        return ans;
+        return dis;
     }
 }
