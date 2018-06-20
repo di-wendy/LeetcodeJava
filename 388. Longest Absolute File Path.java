@@ -1,21 +1,16 @@
-public class Solution {
-    public int lengthLongestPath(String input) {
-        
+class Solution {
+    public int lengthLongestPath(String s) {
         int ans = 0;
-        if(input.length() == 0) return ans;
-        
-        int[] path = new int[input.length() + 2];
-        
-        for(String s: input.split("\n")){
-            int level = s.lastIndexOf("\t") + 1;
-            path[level + 1] =  path[level] + s.substring(level).length() + 1;
-            
-            if(s.indexOf(".") != -1){
-                ans = Math.max(ans, path[level + 1] - 1);
+        String[] files = s.split("\n");
+        int[] length = new int[files.length];
+        for (String t : files){
+            int level = t.lastIndexOf("\t");
+            int cur = t.substring(level + 1, t.length()).length();
+            length[level + 1] = (level + 1 == 0) ? cur + 1 : length[level] + cur + 1;
+            if (t.indexOf('.')!= -1){
+                ans = Math.max(length[level + 1] -1, ans);
             }
         }
-        
-        
         return ans;
     }
 }
