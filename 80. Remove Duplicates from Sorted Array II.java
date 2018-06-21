@@ -1,24 +1,20 @@
-public class Solution {
+class Solution {
     public int removeDuplicates(int[] nums) {
         if (nums.length == 0) return 0;
-        int fast = 1;
-        int slow = 1;
-        int counter = nums[0];
+        int i = 1;
+        int j = 1;
+        int cur = nums[0];
         int count = 1;
-        while (fast < nums.length){
-            if (nums[fast] == counter){
-                count ++;
-            }
-            else{
-                counter = nums[fast];
+        while (j < nums.length){
+            if (cur == nums[j]) count++;
+            else {
+                cur = nums[j];
                 count = 1;
             }
-            nums[slow] = nums[fast];
-            if (count <= 2){
-                slow ++;
-            }
-            fast ++;
+            nums[i] = nums[j];
+            if (count <= 2) i++;
+            j++;
         }
-        return slow;
+        return i;
     }
 }
