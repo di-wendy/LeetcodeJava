@@ -27,3 +27,43 @@ class Solution {
         }
     }
 }
+
+//BFS
+class Node{
+    int x, y, val;
+    public Node(int x, int y, int val){
+        this.x = x;
+        this.y = y;
+        this.val = val;
+    }
+}
+
+public class Solution {
+    public void wallsAndGates(int[][] rooms) {
+        //Put gates in queue
+        if (rooms.length == 0 || rooms[0].length == 0) return;
+        int m = rooms.length, n = rooms[0].length;
+        Queue<Node> q = new LinkedList<>();
+        for (int i = 0; i < m; i++){
+            for (int j = 0; j < n; j++){
+                if (rooms[i][j] == 0) q.offer(new Node(i, j, rooms[i][j]));
+            }
+        }
+        //BFS points in Queue, when point.value + 1 < surrounding.value && not wall, update, put in queue
+        int[] dx = new int[]{-1,1,0,0};
+        int[] dy = new int[]{0,0,-1,1};
+        while (!q.isEmpty()){
+            Node cur = q.poll();
+            for (int i = 0; i < 4; i++){
+                int newX = cur.x + dx[i];
+                int newY = cur.y + dy[i];
+                if (newX >= 0 && newX < m && newY >= 0 && newY < n){
+                    if (cur.val + 1 < rooms[newX][newY]){
+                    q.offer(new Node(newX, newY, cur.val + 1));
+                    rooms[newX][newY] = cur.val + 1;
+                    }
+                }
+            }
+        }
+    }
+}
