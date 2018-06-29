@@ -1,31 +1,18 @@
 class Solution {
     public boolean wordPattern(String pattern, String str) {
-        Set<String> set = new HashSet<String>();
-        Map<Character,String> mp = new HashMap<>();
-        
-        char[] input = pattern.toCharArray();
-        String[] s = str.split(" ");
-        
-        if (input.length != s.length){
-            return false;
-        }
-        
-        for (int i = 0; i < input.length; i++){
-            if(!mp.containsKey(input[i])){
-                if (set.contains(s[i])){
-                    //System.out.print("*1*");
-                    return false;
-                }
-                mp.put(input[i],s[i]);
-                set.add(s[i]);
-            }
-            else{
-                if (!mp.get(input[i]).equals(s[i])){
-                    return false;
-                }
+        String[] words = str.split(" ");
+        if (words.length != pattern.length()) return false;
+        Map<Character, String> c2s = new HashMap<>();
+        Map<String, Character> s2c = new HashMap<>();
+        for (int i = 0; i < pattern.length(); i++){
+            if (c2s.containsKey(pattern.charAt(i))) {
+                if (!c2s.get(pattern.charAt(i)).equals(words[i])) return false;
+            } else if (s2c.containsKey(words[i])) return false;
+            else {
+                c2s.put(pattern.charAt(i), words[i]);
+                s2c.put(words[i], pattern.charAt(i));
             }
         }
-        
         return true;
     }
 }
