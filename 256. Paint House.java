@@ -1,3 +1,21 @@
+//DP Constant Space
+class Solution {
+    public int minCost(int[][] costs) {
+        if (costs.length == 0) return 0;
+        int red = costs[0][0];
+        int blue = costs[0][1];
+        int green = costs[0][2];
+        //init
+        for (int i = 1; i < costs.length; i++){
+            int tempBlue = blue;
+            int tempGreen = green;
+            blue = Math.min(red, green) + costs[i][1];
+            green = Math.min(tempBlue, red) + costs[i][2];
+            red = Math.min(tempBlue, tempGreen) + costs[i][0];
+        }
+        return Math.min(red, Math.min(blue, green));
+    }
+}
 //Dynamic Programming 2ms
 public class Solution {
     public int minCost(int[][] costs) {
