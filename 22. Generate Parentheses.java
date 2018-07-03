@@ -1,3 +1,22 @@
+//Update
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<String>();
+        search(ans, "", 0, 0, n);
+        return ans;
+    }
+    
+    public void search(List<String> ans, String temp, int pre, int post, int n){
+        if (post > pre) return;
+        if (temp.length() == 2*n) {
+            if (pre == post) ans.add(temp);
+            return;
+        }
+        search(ans, temp + "(", pre + 1, post, n);
+        search(ans, temp + ")", pre, post + 1, n);
+    }
+}
+//
 public class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> list = new ArrayList<String>();
