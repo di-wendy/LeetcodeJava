@@ -1,43 +1,32 @@
 public class Solution {
     public int firstUniqChar(String s) {
-        
         int ans = -1;
-        
         int[] frq = new int[26];
         
         for(int i=0; i<s.length(); i++){
             frq[s.charAt(i)-'a'] ++;
         }
-        
         for(int i=0; i<s.length(); i++){
             if(frq[s.charAt(i)-'a']==1) return i;
         }
-        
         return ans;
     }
 }
 
-//Second method
+//HashMap
 class Solution {
     public int firstUniqChar(String s) {
-        int[] occur = new int[26];
-        int[] index = new int[26];
-        for (int i = 0; i < 26; i++){
-            index[i] = -1;
-        }
+        Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++){
-            char c = s.charAt(i);
-            occur[c - 'a'] ++;
-            if (index[c - 'a'] == -1){
-                index[c - 'a'] = i;
+            if(map.containsKey(s.charAt(i))) map.put(s.charAt(i), s.length());
+            else{
+                map.put(s.charAt(i), i);
             }
         }
-        int res = s.length();
-        for (int i = 0; i < 26; i++){
-            if (occur[i] == 1 && index[i] < res){
-                res = index[i];
-            }
+        int i = s.length();
+        for (int n : map.values()){
+            i = Math.min(i, n);
         }
-        return (res == s.length())?-1:res;
+        return (i == s.length()) ? -1 : i;
     }
 }
