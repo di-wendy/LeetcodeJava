@@ -1,3 +1,15 @@
+//Recursive
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode ans = head.next;
+        head.next = swapPairs(head.next.next);
+        ans.next = head;
+        return ans;
+    }
+}
+
+//Iterative
 class Solution {
     public ListNode swapPairs(ListNode head) {
         //three pointer
