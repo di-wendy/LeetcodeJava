@@ -1,15 +1,18 @@
-public class Solution {
+class Solution {
     public int numTrees(int n) {
+        if (n == 0) return 0;
+        int[] dp = new int[n + 1];
+        //init
+        dp[0] = 1;
+        dp[1] = 1;
         
-        int [] G = new int[n+1];
-        G[0] = G[1] = 1;
-    
-        for(int i=2; i<=n; i++) {
-    	    for(int j=0; j<i; j++) {
-    		    G[i] += G[j] * G[i-j-1];
-    	    }
+        for (int i = 2; i <= n; i++){
+            int total = 0;
+            for (int j = 1; j <= i; j++){
+                total += (dp[j - 1] * dp[i - j]);
+            }
+            dp[i] = total;
         }
-
-        return G[n];
+        return dp[n];
     }
 }
