@@ -1,43 +1,24 @@
-public class Solution {
+class Solution {
     public boolean isOneEditDistance(String s, String t) {
-        
-        if(Math.abs(s.length() - t.length()) > 1) return false;
-        if(s.equals(t)) return false;
-
-        boolean record = false;
-        
-        //One letter replaced
-        if(s.length() == t.length()){
-            for(int i = 0; i < s.length(); i++){
-                if(s.charAt(i) != t.charAt(i)){
-                    if(!record){
-                        record = true;
-                    }
-                    else{
-                        return false;
-                    }
-                }
+        if (s.equals(t)) return false;
+        int i = 0;
+        int j = 0;
+        while (i < s.length() && j < t.length()){
+            if (s.charAt(i) != t.charAt(j)){
+                return check(s, t, i + 1, j) || check(s, t, i, j + 1) ||
+                    check(s, t, i + 1, j + 1);
             }
-           return record;
+            i++;
+            j++;
         }
-
-        //One letter missing
-        int p = 0, q = 0;
-        while(p < s.length() && q < t.length()){
-            if(s.charAt(p) != t.charAt(q)){
-                if(s.length() < t.length()){p--;}
-                else {q--;}
-                if(!record){
-                        record = true;
-                    }
-                    else{
-                        return false;
-                    }
-            }
-            p++;
-            q++;
+        return Math.abs(s.length() - t.length()) <= 1;
+    }
+    
+    public boolean check(String s, String t, int i, int j){
+        if ((s.length() - i) != (t.length() - j)) return false;
+        while (i < s.length() && j < t.length()){
+            if (s.charAt(i++) != t.charAt(j++)) return false;
         }
         return true;
     }
-}
 }
