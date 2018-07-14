@@ -1,38 +1,40 @@
 class Solution {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        List<Set<String>> ans = new ArrayList<>();
-        Map<String, Integer> Email2Name = new HashMap<>();
-
-        for (int i = 0; i < accounts.length; i++){
-            String name = accounts.get(i).get(0);
-            String Email = "";
-            boolean repeated = false;
-            for (int j = 1; j < accounts.get(i).length; j++){
-                if(Email2Name.containsKey(accounts.get(i).get(j))){
-                    repeated = true;
-                    Eamil = accounts.get(i).get(j);
-                    break;
+        Map<String, String> name = new HashMap<>();
+        for (List<String> a : accounts){
+            if (a.size() > 1) name.put(a.get(1), a.get(0));
+        }
+        Map<String, String> map = new HashMap<>();
+        for (List<String> a : accounts){
+            //if (a.size() > 1) map.put(a.get(1), a.get(1));
+            for (int i = 1; i < a.size(); i++){
+                if (map.containsKey(a.get(i))){
+                    map.put(findfather(a.get(1),map), findfather(a.get(i), map));
                 }
-            }
-            if (repeated){
-                int cur = Email2Name.get(Email);
-                for (int j = 1; j < accounts.get(i).length; j++){
-                    ans.get(cur).add(accounts.get(i).get(j));
-                }
-            } else {
-                ans.add(new HashSet<String());
-                ans.get(ans.size() - 1).add(name);
-                for (int j = 1; j < accounts.get(i).length; j++){
-                    Email2Name.put(accounts.get(i).get(j), ans.size() - 1);
-                    ans.get(ans.size() - 1).add(accounts.get(i).get(j));
-                }
+                else map.put(a.get(i), a.get(1));
             }
         }
+        //Put into list
+        Map<String, TreeSet<String>> ans = new HashMap<>();
+        for (String s : map.keySet()){
+            String father = findfather(s, map);
+            ans.putIfAbsent(father, new TreeSet());
+            ans.get(father).add(s);
+        }
+        //Transfer
         List<List<String>> output = new ArrayList<>();
-        for (int i = 0; i < ans.length; i++){
-            output.add(new ArrayList<>());
-            
+        for (String s : ans.keySet()){
+            output.add(new ArrayList<String>());
+            output.get(output.size() - 1).add(name.get(s));
+            for (String st : ans.get(s)){
+                output.get(output.size() - 1).add(st);
+            }
         }
-        
+        return output;
+    }
+    
+    public String findfather(String s, Map<String, String> map){
+        if (map.get(s).equals(s)) return s;
+        return findfather(map.get(s), map);
     }
 }
