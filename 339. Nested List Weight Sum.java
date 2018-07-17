@@ -46,3 +46,21 @@ public class Solution {
         return ans;
     }
 }
+//
+class Solution {
+    public int depthSum(List<NestedInteger> nestedList) {
+        return getSum(nestedList, 1);
+    }
+    
+    public int getSum(List<NestedInteger> nestedList, int base){
+        int sum = 0;
+        for (int i = 0; i < nestedList.size(); i++){
+            if (nestedList.get(i).isInteger()){
+                sum += nestedList.get(i).getInteger() * base;
+            } else {
+                sum += getSum(nestedList.get(i).getList(), base + 1);
+            }
+        }
+        return sum;
+    }
+}
