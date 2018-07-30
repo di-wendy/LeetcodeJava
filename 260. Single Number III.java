@@ -1,3 +1,20 @@
+class Solution {
+    public int[] singleNumber(int[] input) {
+        int diff = 0;
+        int[] output = new int[]{0,0};
+        for (int n : input) diff ^= n;
+        diff &= -diff;
+        for (int n : input){
+            if ((n&diff) == 0){
+                output[0] ^= n;
+            } else {
+                output[1] ^= n;
+            }
+        }
+        return output;
+    }
+}
+//Simplier
 public class Solution {
     public int[] singleNumber(int[] nums) {
         
