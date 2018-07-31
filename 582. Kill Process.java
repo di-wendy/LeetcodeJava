@@ -1,3 +1,30 @@
+class Solution {
+    public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
+        List<Integer> ans = new ArrayList<>();
+        // Queue<Integer> q = new LinkedList<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < pid.size(); i++){
+            map.putIfAbsent(ppid.get(i), new ArrayList<>());
+            map.get(ppid.get(i)).add(pid.get(i));
+        }
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(kill);
+        while (!q.isEmpty()){
+            int size = q.size();
+            for (int i = 0; i < size; i++){
+                int cur = q.poll();
+                ans.add(cur);
+                if (map.containsKey(cur)){
+                    for (Integer n : map.get(cur)){
+                        q.offer(n);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+
 //Stack and DFS
 public class Solution {
     public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
